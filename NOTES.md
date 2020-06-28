@@ -9,7 +9,7 @@ firewall-cmd --list-all
 ## Add port to firewall
 
 ```
-firewall-cmd --zone=public --add-port=8008/tcp --permanent
+firewall-cmd --zone=public --add-port=8080/tcp --permanent
 firewall-cmd --reload
 ```
 
@@ -67,3 +67,19 @@ systemctl reload nginx.service
 ```
 
 PS: You might probably need to: `setsebool -P httpd_can_network_connect 1`
+
+# Install Docker
+
+```
+sudo yum install -y yum-utils
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+yum install docker
+
+systemctl enable docker.service
+systemctl start docker.service
+
+pip3 install docker-compose
+docker-compose up -d
+```
