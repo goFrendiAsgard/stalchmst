@@ -13,6 +13,13 @@ firewall-cmd --zone=public --add-port=8080/tcp --permanent
 firewall-cmd --reload
 ```
 
+## Open masquerade
+
+```
+firewall-cmd --zone=public --add-masquerade
+firewall-cmd --permanent --zone=public --add-masquerade
+```
+
 ## Remove port from firewall
 
 ```
@@ -20,6 +27,12 @@ firewall-cmd --zone=public --remove-port=8080/tcp
 firewall-cmd --runtime-to-permanent
 firewall-cmd --reload
 ```
+
+## No ping
+
+No ping to the outside world. The chances you are missing `sysctl -w net.ipv4.ip_forward=1`
+
+And do not forget to make it permanent by adding the `"net.ipv4.ip_forward=1"` to `/etc/sysctl.conf` (or a file `.conf` in `/etc/sysctl.d/`).
 
 ## Nginx
 
@@ -83,3 +96,24 @@ systemctl start docker.service
 pip3 install docker-compose
 docker-compose up -d
 ```
+
+# Make docker able to access internet
+
+```
+nslookup google.com
+# dns server will be shown
+```
+
+You can use --net=host in docker run command
+
+```
+docker run --net=host -it ubuntu
+```
+
+Else add dns in config file in /etc/default/docker
+
+```
+DOCKER_OPTS="--dns 208.67.222.222 --dns 208.67.220.220"
+```
+
+for more info refer: http://odino.org/cannot-connect-to-the-internet-from-your-docker-containers/
