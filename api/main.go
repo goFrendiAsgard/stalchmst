@@ -17,6 +17,12 @@ func getHTTPPort() string {
 }
 
 func main() {
+	/*
+		TODO: csv2json
+		GIVEN csv2json end point
+		WHEN user give csv
+		THEN json is returned
+	*/
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(r.URL.Path)
