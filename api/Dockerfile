@@ -5,7 +5,8 @@ COPY . .
 
 RUN go get -d -v ./...
 RUN go install -v ./...
+RUN go build -o app
 
 EXPOSE 3000
 
-CMD ["app"]
+CMD ./app
