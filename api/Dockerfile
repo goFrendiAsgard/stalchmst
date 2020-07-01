@@ -1,13 +1,11 @@
-FROM node:12
+FROM golang:1.13
 
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm config set registry http://registry.npmjs.org/
-RUN npm ci --only=production
-
+WORKDIR /go/src/app
 COPY . .
 
+RUN go get -d -v ./...
+RUN go install -v ./...
+
 EXPOSE 3000
-CMD [ "node", "index.js" ]
+
+CMD ["app"]
