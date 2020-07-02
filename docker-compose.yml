@@ -30,7 +30,6 @@ services:
     restart: always
     environment:
       - MYSQL_CONNECTION_STRING="root:toor@tcp(stalchmst-mysql:3306)/template"
-      - MYSQL_HOST=stalchmst-mysql
-      - MYSQL_PORT=3306
+      - MYSQL_MAX_CONNECT_ATTEMPT=50
     depends_on:
       - mysql

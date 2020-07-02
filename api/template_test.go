@@ -2,8 +2,18 @@ package main
 
 import (
 	"os"
+	"strconv"
 	"testing"
 )
+
+func createTm() (*TemplateModel, error) {
+	connectionString := os.Getenv("MYSQL_CONNECTION_STRING")
+	maxConnectAttempt, err := strconv.Atoi(os.Getenv("MYSQL_MAX_CONNECT_ATTEMPT"))
+	if err != nil {
+		return &TemplateModel{}, err
+	}
+	return NewTemplateModel(connectionString, maxConnectAttempt)
+}
 
 /*
 	GIVEN list template endpoint
@@ -11,8 +21,7 @@ import (
 	THEN list of available template should be shown
 */
 func TestGetAllTemplate(t *testing.T) {
-	connectionString := os.Getenv("MYSQL_CONNECTION_STRING")
-	tm, err := NewTemplateModel(connectionString)
+	tm, err := createTm()
 	if err != nil {
 		t.Error(err)
 		return
@@ -36,8 +45,7 @@ func TestGetAllTemplate(t *testing.T) {
 	THEN the corresponding template should be shown
 */
 func TestGetTemplateByCode(t *testing.T) {
-	connectionString := os.Getenv("MYSQL_CONNECTION_STRING")
-	tm, err := NewTemplateModel(connectionString)
+	tm, err := createTm()
 	if err != nil {
 		t.Error(err)
 		return
@@ -64,8 +72,7 @@ func TestGetTemplateByCode(t *testing.T) {
 	THEN generated document should be shown
 */
 func TestGenerateWithoutData(t *testing.T) {
-	connectionString := os.Getenv("MYSQL_CONNECTION_STRING")
-	tm, err := NewTemplateModel(connectionString)
+	tm, err := createTm()
 	if err != nil {
 		t.Error(err)
 		return
@@ -98,8 +105,7 @@ func TestGenerateWithoutData(t *testing.T) {
 	THEN generated document should be shown
 */
 func TestGenerateWithData(t *testing.T) {
-	connectionString := os.Getenv("MYSQL_CONNECTION_STRING")
-	tm, err := NewTemplateModel(connectionString)
+	tm, err := createTm()
 	if err != nil {
 		t.Error(err)
 		return

@@ -23,19 +23,26 @@ type TemplateModel struct {
 	db *sql.DB
 }
 
-// NewTemplateModel create new templateModel
-func NewTemplateModel(connectionString string) (*TemplateModel, error) {
-	tm := &TemplateModel{}
+func getDb(connectionString string) (*sql.DB, error) {
 	db, err := sql.Open("mysql", connectionString)
 	if err != nil {
-		return tm, err
+		return db, err
 	}
-	db.SetConnMaxLifetime(time.Second * 5)
-	db.SetMaxIdleConns(0)
-	db.SetMaxOpenConns(151)
+	err = db.Ping()
+	return db, err
+}
 
+// NewTemplateModel create new templateModel
+func NewTemplateModel(connectionString string, maxConnectAttempt int) (*TemplateModel, error) {
+	tm := &TemplateModel{}
+	db, err := getDb(connectionString)
+	attempt := 0
+	for err != nil && attempt < maxConnectAttempt {
+		time.Sleep(3 * time.Second)
+		db, err = getDb(connectionString)
+		attempt++
+	}
 	tm.db = db
-	err = tm.db.Ping()
 	return tm, err
 }
 
