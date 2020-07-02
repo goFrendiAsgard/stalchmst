@@ -5,6 +5,9 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"log"
+	"os"
+	"strconv"
 	"text/template"
 	"time"
 
@@ -40,10 +43,25 @@ func NewTemplateModel(connectionString string, maxConnectAttempt int) (*Template
 	for err != nil && attempt < maxConnectAttempt {
 		time.Sleep(3 * time.Second)
 		db, err = getDb(connectionString)
+		if err != nil {
+			log.Println("Connection error", err)
+		}
 		attempt++
 	}
 	tm.db = db
 	return tm, err
+}
+
+// CreateDefaultTemplateModel create template model and set it's db
+func CreateDefaultTemplateModel() (*TemplateModel, error) {
+	connectionString := os.Getenv("MYSQL_CONNECTION_STRING")
+	maxConnectAttempt, err := strconv.Atoi(os.Getenv("MYSQL_MAX_CONNECT_ATTEMPT"))
+	log.Println("Connection String", connectionString)
+	log.Println("Max Connect Attempt", maxConnectAttempt)
+	if err != nil {
+		return &TemplateModel{}, err
+	}
+	return NewTemplateModel(connectionString, maxConnectAttempt)
 }
 
 // Close close templateModel

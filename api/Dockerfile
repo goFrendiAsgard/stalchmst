@@ -10,4 +10,4 @@ RUN go build -o app
 
 EXPOSE 3000
 
-CMD ./wait.sh && ./app
+CMD ./app

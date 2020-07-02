@@ -6,11 +6,12 @@ services:
     image: mysql
     restart: always
     volumes:
-      - "./mysql/data:/var/lib/mysql"
-      - "./mysql/init:/docker-entrypoint-initdb.d"
+      - "./mysql/init/init.sql:/docker-entrypoint-initdb.d/init.sql"
     environment:
       - MYSQL_ROOT_PASSWORD=toor
-      - MYSQL_DATABASE=template
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
 
   nginx:
     container_name: stalchmst-nginx
@@ -29,7 +30,7 @@ services:
     build: api
     restart: always
     environment:
-      - MYSQL_CONNECTION_STRING="root:toor@tcp(stalchmst-mysql:3306)/template"
+      - MYSQL_CONNECTION_STRING=user:password@tcp(stalchmst-mysql:3306)/db
       - MYSQL_MAX_CONNECT_ATTEMPT=50
     depends_on:
       - mysql

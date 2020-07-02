@@ -1,4 +1,4 @@
-USE `template`;
+USE `db`;
 
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE IF NOT EXISTS `templates` (

@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"html"
 	"log"
-	"net/http"
 	"os"
+
+	"github.com/gin-gonic/gin"
 )
 
 func getHTTPPort() string {
@@ -16,23 +16,63 @@ func getHTTPPort() string {
 	return port
 }
 
+func createJSONResponse(c *gin.Context, data interface{}, err error) {
+	if err != nil {
+		c.JSON(500, gin.H{
+			"status":        "error",
+			"error_message": fmt.Sprintf("%s", err),
+		})
+		return
+	}
+	c.JSON(200, gin.H{
+		"status":        "ok",
+		"error_message": "",
+		"data":          data,
+	})
+}
+
 func main() {
-	/*
-		TODO: csv2json
-		GIVEN csv2json end point
-		WHEN user give csv
-		THEN json is returned
-	*/
+	tm, err := CreateDefaultTemplateModel()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println(r.URL.Path)
-		fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+	r := gin.Default()
+
+	// default API endpoint
+	r.Any("/", func(c *gin.Context) {
+		createJSONResponse(c, "API is ready", nil)
 	})
 
-	http.HandleFunc("/hi", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hi")
+	// get all templates
+	r.GET("/templates", func(c *gin.Context) {
+		templateRows, err := tm.GetAll()
+		createJSONResponse(c, templateRows, err)
 	})
 
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", getHTTPPort()), nil))
+	// get single template
+	r.GET("/template/:code", func(c *gin.Context) {
+		templateRow, err := tm.GetByCode(c.Param("code"))
+		createJSONResponse(c, templateRow, err)
+	})
+
+	// generate
+	r.POST("/generate/:code", func(c *gin.Context) {
+		templateRow, err := tm.GetByCode(c.Param("code"))
+		if err != nil {
+			createJSONResponse(c, "", err)
+			return
+		}
+		data := c.PostForm("data")
+		if data != "" {
+			generatedData, err := tm.GenerateWithoutData(templateRow)
+			createJSONResponse(c, generatedData, err)
+			return
+		}
+		generatedData, err := tm.Generate(templateRow, data)
+		createJSONResponse(c, generatedData, err)
+	})
+
+	r.Run(fmt.Sprintf(":%s", getHTTPPort()))
 
 }
