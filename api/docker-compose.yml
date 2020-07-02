@@ -3,7 +3,7 @@ services:
 
   mysql:
     container_name: stalchmst-mysql-test
-    image: mysql:5.7
+    image: mysql
     restart: always
     volumes:
       - "./mysql-test-init/init.sql:/docker-entrypoint-initdb.d/init.sql"
