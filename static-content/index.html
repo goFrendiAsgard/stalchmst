@@ -8,6 +8,7 @@
 
     <div class="container">
         <div class="jumbotron mt-3">
+            <img src="/images/state-alchemists.png" class="rounded float-left" alt="This image was taken from fullmetal alchemist franchise" />
             <h1>Stalchmst</h1>
             <p class="lead">Welcome to our overglorified website</p>
         </div>
@@ -26,7 +27,7 @@
                                 <label for="tmplt-data">Data</label>
                                 <textarea id="tmplt-data" class="form-control" rows="10"></textarea>
                             </div>
-                            <button id="tmplt-generate" class="btn btn-primary">Generate</button>
+                            <button id="tmplt-generate" class="btn btn-primary">Generate and copy to clipboard</button>
                         </form>
                     </div>
                     <div class="col-sm-6">
@@ -84,8 +85,9 @@
                         data: templateData
                     },
                     success: (response) => {
-                       const generated = response.data;
-                       $("#tmplt-generated").html(generated);
+                        const generated = response.data;
+                        navigator.clipboard.writeText(generated);
+                        $("#tmplt-generated").html(generated);
                     }
                 })
             });
