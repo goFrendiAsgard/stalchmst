@@ -8,7 +8,7 @@
 
     <div class="container">
         <div class="jumbotron mt-3">
-            <img src="/images/state-alchemists.png" class="rounded float-left" alt="This image was taken from fullmetal alchemist franchise" />
+            <img style="width:100px; height:100px;" src="/images/state-alchemists.png" class="rounded float-left" alt="This image was taken from fullmetal alchemist franchise" />
             <h1>Stalchmst</h1>
             <p class="lead">Welcome to our overglorified website</p>
         </div>
@@ -86,8 +86,10 @@
                     },
                     success: (response) => {
                         const generated = response.data;
-                        navigator.clipboard.writeText(generated);
                         $("#tmplt-generated").html(generated);
+                        $("#tmplt-generated").select();
+                        $("#tmplt-generated").setSelectionRange(0, 9999);
+                        document.execCommand("copy");
                     }
                 })
             });
