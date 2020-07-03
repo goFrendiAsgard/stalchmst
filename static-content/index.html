@@ -76,7 +76,6 @@
                 event.preventDefault();
                 templateCode = $("#tmplt-code").val();
                 templateData = $("#tmplt-data").val();
-                console.log(templateData);
                 $.ajax({
                     url: `/api/generate/${templateCode}`,
                     method: "post",
