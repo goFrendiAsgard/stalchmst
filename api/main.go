@@ -64,7 +64,7 @@ func main() {
 			return
 		}
 		data := c.PostForm("data")
-		if data != "" {
+		if data == "" {
 			generatedData, err := tm.GenerateWithoutData(templateRow)
 			createJSONResponse(c, generatedData, err)
 			return

@@ -16,9 +16,9 @@ import (
 
 // TemplateRow is a single template
 type TemplateRow struct {
-	Code     string
-	Template string
-	Data     string
+	Code     string `json:"code"`
+	Template string `json:"template"`
+	Data     string `json:"data"`
 }
 
 // TemplateModel is model to get template
