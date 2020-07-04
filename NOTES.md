@@ -100,8 +100,7 @@ docker-compose up -d
 # Make docker able to access internet
 
 ```
-nslookup google.com
-# dns server will be shown
+nslookup google.com # dns server will be shown
 ```
 
 You can use --net=host in docker run command
@@ -117,3 +116,76 @@ DOCKER_OPTS="--dns 208.67.222.222 --dns 208.67.220.220"
 ```
 
 for more info refer: http://odino.org/cannot-connect-to-the-internet-from-your-docker-containers/
+
+# Neovim FTW
+
+Basic setup
+
+```
+set nocompatible
+
+" enable syntax and plugin
+syntax enable
+filetype plugin on
+```
+
+Finding files
+
+```
+set path+=**
+set wildmenu
+find filename
+```
+
+netrw
+
+```
+Explore
+Sexplore
+Vexplore
+```
+
+copy paste to system clipboard
+
+```
+"*yy
+"*p
+```
+
+vimplug
+
+```
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+```
+
+make clipboard works for wsl
+
+```
+curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
+unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
+chmod +x /tmp/win32yank.exe
+sudo mv /tmp/win32yank.exe /usr/bin # move win32yank.exe to $PATH
+'''
+
+Simplest `~/.config/nvim/init.vim`
+
+```
+set nocompatible
+set wildmenu
+syntax enable
+filetype plugin on
+filetype plugin on
+
+set clipboard+=unnamedplus
+
+call plug#begin()
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+call plug#end()
+```
+
+
+
