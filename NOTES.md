@@ -2,27 +2,27 @@
 
 ## See what ports are opened by firewall
 
-```
+```sh
 firewall-cmd --list-all
 ```
 
 ## Add port to firewall
 
-```
+```sh
 firewall-cmd --zone=public --add-port=8080/tcp --permanent
 firewall-cmd --reload
 ```
 
 ## Open masquerade
 
-```
+```sh
 firewall-cmd --zone=public --add-masquerade
 firewall-cmd --permanent --zone=public --add-masquerade
 ```
 
 ## Remove port from firewall
 
-```
+```sh
 firewall-cmd --zone=public --remove-port=8080/tcp
 firewall-cmd --runtime-to-permanent
 firewall-cmd --reload
@@ -38,7 +38,7 @@ And do not forget to make it permanent by adding the `"net.ipv4.ip_forward=1"` t
 
 ### Install and enable
 
-```
+```sh
 yum install nginx
 systemctl enable nginx.service
 systemctl start nginx.service
@@ -48,7 +48,7 @@ systemctl start nginx.service
 
 create file `/etc/nginx/conf.d/main.conf`
 
-```
+```nginx
 server {
 
     # listen to port 80
@@ -74,16 +74,16 @@ server {
 
 ### Checking and reload
 
-```
+```sh
 nginx -t
 systemctl reload nginx.service
 ```
 
 PS: You might probably need to: `setsebool -P httpd_can_network_connect 1`
 
-# Install Docker
+## Install Docker (CentOS)
 
-```
+```sh
 sudo yum install -y yum-utils
 sudo yum-config-manager \
     --add-repo \
@@ -97,31 +97,31 @@ pip3 install docker-compose
 docker-compose up -d
 ```
 
-# Make docker able to access internet
+## Make docker able to access internet
 
-```
+```sh
 nslookup google.com # dns server will be shown
 ```
 
 You can use --net=host in docker run command
 
-```
+```sh
 docker run --net=host -it ubuntu
 ```
 
 Else add dns in config file in /etc/default/docker
 
-```
+```sh
 DOCKER_OPTS="--dns 208.67.222.222 --dns 208.67.220.220"
 ```
 
-for more info refer: http://odino.org/cannot-connect-to-the-internet-from-your-docker-containers/
+for more info refer: [](http://odino.org/cannot-connect-to-the-internet-from-your-docker-containers/)
 
-# Neovim FTW
+## Neovim FTW
 
-Basic setup
+### Basic setup
 
-```
+```vim
 set nocompatible
 
 " enable syntax and plugin
@@ -129,49 +129,41 @@ syntax enable
 filetype plugin on
 ```
 
-Finding files
+### Finding files
 
-```
+```vim
 set path+=**
 set wildmenu
 find filename
 ```
 
-netrw
+### netrw
 
-```
+```vim
 Explore
 Sexplore
 Vexplore
 ```
 
-copy paste to system clipboard
+### copy paste to system clipboard
 
-```
+```vim
 "*yy
 "*p
 ```
 
-vimplug
+### make clipboard works for wsl
 
-```
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-```
-
-make clipboard works for wsl
-
-```
+```sh
 curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
 unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
 chmod +x /tmp/win32yank.exe
 sudo mv /tmp/win32yank.exe /usr/bin # move win32yank.exe to $PATH
 '''
 
-Simplest `~/.config/nvim/init.vim`
+### Simplest `~/.config/nvim/init.vim`
 
-```
+```sh
 set nocompatible
 set wildmenu
 syntax enable
@@ -187,5 +179,19 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 ```
 
+Coc
 
+```vim
+CocInstall coc-json coc-tsserver coc-go \
+coc-python coc-yaml coc-css coc-html coc-eslint coc-markdownlist \
+coc-sh coc-sql coc-vimlsp coc-todolist
+```
+
+### vimplug
+
+```sh
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+```
 
