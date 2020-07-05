@@ -159,7 +159,7 @@ curl -sLo/tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/down
 unzip -p /tmp/win32yank.zip win32yank.exe > /tmp/win32yank.exe
 chmod +x /tmp/win32yank.exe
 sudo mv /tmp/win32yank.exe /usr/bin # move win32yank.exe to $PATH
-'''
+```
 
 ### Simplest `~/.config/nvim/init.vim`
 
@@ -179,7 +179,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 ```
 
-Coc
+### Coc
 
 ```vim
 CocInstall coc-json coc-tsserver coc-go \
@@ -191,7 +191,7 @@ coc-sh coc-sql coc-vimlsp coc-todolist
 
 ```sh
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 ```
 
