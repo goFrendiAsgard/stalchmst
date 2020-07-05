@@ -302,7 +302,7 @@ echo ">> Done"
 * CI/CD: buddy works
 * Deployment machine: Vultr with ssh access
 * Docker compose was already presented in the `Docker Compose: How is it looks like?` section
-<img src="/docker-compose/ci-cd.png" />
+<img src="/images/docker-compose/ci-cd.png" />
 
 ---
 
