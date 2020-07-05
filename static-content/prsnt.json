@@ -1,0 +1,11 @@
+{
+    "url": "/api/generate/",
+    "code": "remark",
+    "articles": [
+        {
+            "file": "/markdown/docker-compose.md",
+            "title": "Docker-compose: Container in steroid",
+            "description": "Using docker-compose for development and deployment."
+        }
+    ]
+}
