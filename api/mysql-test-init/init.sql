@@ -1,5 +1,4 @@
-USE `db`;
-
+USE db;
 DROP TABLE IF EXISTS `templates`;
 CREATE TABLE IF NOT EXISTS `templates` (
   `code` varchar(50) NOT NULL COMMENT 'code',
@@ -9,4 +8,7 @@ CREATE TABLE IF NOT EXISTS `templates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `templates` (`code`, `template`, `data`) VALUES
-	('cv-markdown-example', '# Name\r\n{{.Name}}\r\n# Skills\r\n{{range $skill := .Skills}}* {{$skill}}\r\n{{end}}', '{"Name": "Emiya Shirou", "Skills": ["Unlimited Blade Works", "Rho Aias"]}');
+	('cv-markdown-example', '# Name\r\n{{.Name}}\r\n# Skills\r\n{{range $skill := .Skills}}* {{$skill}}\r\n{{end}}', '{\r\n  "Name": "Emiya Shirou", \r\n  "Skills": ["Unlimited Blade Works", "Rho Aias"]\r\n}'),
+	('gherkin-js', 'describe("{{.Given}}", () => {\r\n    describe("{{.When}}", () => {\r\n        it("{{.Then}}", () => {\r\n            // TODO: Write your code\r\n        }\r\n    }\r\n});', '{\r\n    "Given": "Login page",\r\n    "When": "User provide valid username, password AND click login button",\r\n    "Then": "Session created"\r\n}'),
+	('pantun-receh', 'Jalan jalan ke kota {{.Kota}}\r\nJangan lupa membeli {{.Barang}}\r\nBuat apa ke kota {{.Kota}}\r\nKalau cuma membeli {{.Barang}}', '{\r\n  "Kota": "Malang",\r\n  "Barang": "Jenang"\r\n}');
+

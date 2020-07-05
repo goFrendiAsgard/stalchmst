@@ -20,12 +20,16 @@
                     <div class="col-sm-6">
                         <form>
                             <div class="form-group">
-                                <label for="tmplt-code">Template</label>
+                                <label for="tmplt-code">Template Code</label>
                                 <select id="tmplt-code" class="form-control"></select>
                             </div>
                             <div class="form-group">
+                                <label for="tmplt-template">Template</label>
+                                <textarea id="tmplt-template" class="form-control" rows="5"></textarea>
+                            </div>
+                            <div class="form-group">
                                 <label for="tmplt-data">Data</label>
-                                <textarea id="tmplt-data" class="form-control" rows="10"></textarea>
+                                <textarea id="tmplt-data" class="form-control" rows="5"></textarea>
                             </div>
                             <button id="tmplt-generate" class="btn btn-primary">Generate and copy to clipboard</button>
                         </form>
@@ -50,9 +54,12 @@
             const templateMap = {};
 
             function adjustTemplateData() {
-                templateCode = $("#tmplt-code").val();
-                templateData = templateMap[templateCode].data;
+                const templateCode = $("#tmplt-code").val();
+                const templateData = templateMap[templateCode].data;
+                const templateTemplate = templateMap[templateCode].template;
                 $("#tmplt-data").html(templateData);
+                $("#tmplt-template").html(templateTemplate);
+		$("#tmplt-generated").html("");
             }
 
             $.ajax({
@@ -74,20 +81,21 @@
 
             $("#tmplt-generate").click((event) => {
                 event.preventDefault();
-                templateCode = $("#tmplt-code").val();
-                templateData = $("#tmplt-data").val();
+                const templateCode = $("#tmplt-code").val();
+                const templateData = $("#tmplt-data").val();
+                const templateTemplate = $("#tmplt-template").val();
                 $.ajax({
-                    url: `/api/generate/${templateCode}`,
+                    url: '/api/generate',
                     method: "post",
                     dataType: "json",
                     data: {
-                        data: templateData
+                        data: templateData,
+			template: templateTemplate
                     },
                     success: (response) => {
                         const generated = response.data;
                         $("#tmplt-generated").html(generated);
                         $("#tmplt-generated").select();
-                        // $("#tmplt-generated").setSelectionRange(0, 9999);
                         document.execCommand("copy");
                     }
                 })

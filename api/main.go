@@ -57,19 +57,10 @@ func main() {
 	})
 
 	// generate
-	r.POST("/generate/:code", func(c *gin.Context) {
-		templateRow, err := tm.GetByCode(c.Param("code"))
-		if err != nil {
-			createJSONResponse(c, "", err)
-			return
-		}
+	r.POST("/generate", func(c *gin.Context) {
+		templateStr := c.PostForm("template")
 		data := c.PostForm("data")
-		if data == "" {
-			generatedData, err := tm.GenerateWithoutData(templateRow)
-			createJSONResponse(c, generatedData, err)
-			return
-		}
-		generatedData, err := tm.Generate(templateRow, data)
+		generatedData, err := Generate(templateStr, data)
 		createJSONResponse(c, generatedData, err)
 	})
 

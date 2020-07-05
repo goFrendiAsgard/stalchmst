@@ -3,7 +3,7 @@
 # setup
 echo ">> Setting up testing environment"
 docker-compose down
-docker-compose up -d
+docker-compose up --build -d
 
 # waiting
 echo ">> Wait MySQL to be ready"

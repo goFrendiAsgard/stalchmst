@@ -1,14 +1,11 @@
 package main
 
 import (
-	"bytes"
 	"database/sql"
-	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
-	"text/template"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -43,10 +40,10 @@ func NewTemplateModel(connectionString string, maxConnectAttempt int) (*Template
 	for err != nil && attempt < maxConnectAttempt {
 		time.Sleep(3 * time.Second)
 		db, err = getDb(connectionString)
-		if err != nil {
-			log.Println("Connection error", err)
-		}
 		attempt++
+	}
+	if err != nil {
+		log.Println("Connection error", err)
 	}
 	tm.db = db
 	return tm, err
@@ -96,30 +93,4 @@ func (tm *TemplateModel) GetByCode(code string) (TemplateRow, error) {
 		return templateRow, err
 	}
 	return templateRow, err
-}
-
-// Generate generating data based on template using data
-func (tm *TemplateModel) Generate(templateRow TemplateRow, data string) (string, error) {
-	var msgMapTemplate interface{}
-	err := json.Unmarshal([]byte(data), &msgMapTemplate)
-	if err != nil {
-		return "", err
-	}
-
-	t, err := template.New(templateRow.Code).Parse(templateRow.Template)
-	if err != nil {
-		return "", err
-	}
-
-	var tpl bytes.Buffer
-	if err := t.Execute(&tpl, msgMapTemplate); err != nil {
-		return "", err
-	}
-
-	return tpl.String(), err
-}
-
-// GenerateWithoutData generating data based on template without using data
-func (tm *TemplateModel) GenerateWithoutData(templateRow TemplateRow) (string, error) {
-	return tm.Generate(templateRow, templateRow.Data)
 }
