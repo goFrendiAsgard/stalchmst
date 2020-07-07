@@ -132,13 +132,19 @@
         $(document).ready(() => {
             const tmpltMap = {};
 
+	    function escapeHtml(text) {
+               const div = document.createElement('div');
+               div.innerText = text;
+               return div.innerHTML;
+            } 
+
             function adjustTemplateData() {
                 const tmpltCode = $("#tmplt-code").val();
                 const tmpltData = tmpltMap[tmpltCode].data;
                 const tmpltTemplate = tmpltMap[tmpltCode].template;
-                $("#tmplt-data").text(tmpltData);
-                $("#tmplt-template").text(tmpltTemplate);
-                $("#tmplt-generated").text("");
+                $("#tmplt-data").val(tmpltData);
+                $("#tmplt-template").val(tmpltTemplate);
+                $("#tmplt-generated").val("");
             }
 
             $.ajax({
@@ -169,11 +175,11 @@
                     dataType: "json",
                     data: {
                         data: tmpltData,
-			            template: tmpltTemplate
+                        template: tmpltTemplate
                     },
                     success: (response) => {
                         const generated = response.data;
-                        $("#tmplt-generated").text(generated);
+                        $("#tmplt-generated").val(generated);
                         $("#tmplt-generated").select();
                         document.execCommand("copy");
                     }

@@ -3,11 +3,12 @@
 * Go Frendi Gunawan
 * AI Engineer at [Kata.ai](https://kata.ai)
 * Ex Teacher at [STIKI](http://stiki.ac.id)
-* CTO, writer, Infra Engineer, Backend Engineer, Frontend Engineer at [stalchmst](http://stalchmst.com)
-* Netizen (read: tukang bacot) at twitter: [@gofrendiasgard](https://twitter.com/gofrendiasgard)
+* Initiator at [Malang Cloud Facebook Group](https://www.facebook.com/groups/malangcloud)
+* Writer at [stalchmst](http://stalchmst.com)
+* Netizen at twitter: [@gofrendiasgard](https://twitter.com/gofrendiasgard)
 * Mere Mortal
 
-<img src="/images/gofrendi.jpg" style="width:200px; float:right;" />
+<img src="/images/gofrendi.jpg" style="width:150px; float:right;" />
 
 ---
 
@@ -33,19 +34,19 @@
 # Docker: Some Terminologies
 
 * Image: Definition of a container
-    - Written as `Dockerfile`
-    - Get list of local images: `docker images`
-    - Pull image from registry: `docker pull [OPTIONS] NAME[:TAG|@DIGEST]`
-    - Create image: `docker build [OPTIONS] PATH | URL | -`
-    - Push image to registry: `docker push [OPTIONS] NAME[:TAG]`
+  * Written as `Dockerfile`
+  * Get list of local images: `docker images`
+  * Pull image from registry: `docker pull [OPTIONS] NAME[:TAG|@DIGEST]`
+  * Create image: `docker build [OPTIONS] PATH | URL | -`
+  * Push image to registry: `docker push [OPTIONS] NAME[:TAG]`
 * Image Registry: Place to host docker-images
-    - Public: [https://hub.docker.com/](https://hub.docker.com/)
-    - Private: Usually used internally. Gitlab provide one: [https://docs.gitlab.com/ee/user/packages/container_registry/](https://docs.gitlab.com/ee/user/packages/container_registry/)
+  * Public: [https://hub.docker.com/](https://hub.docker.com/)
+  * Private: Usually used internally. Gitlab provide one: [https://docs.gitlab.com/ee/user/packages/container_registry/](https://docs.gitlab.com/ee/user/packages/container_registry/)
 * Container
-    - Get list of running container: `docker ps`
-    - Get list of all container: `docker ps -a`
-    - Pull and start container: `docker run [OPTIONS] IMAGE [COMMAND] [ARG...]`
-    - Start container: `docker start [OPTIONS] CONTAINER [CONTAINER...]`
+  * Get list of running container: `docker ps`
+  * Get list of all container: `docker ps -a`
+  * Pull and start container: `docker run [OPTIONS] IMAGE [COMMAND] [ARG...]`
+  * Start container: `docker start [OPTIONS] CONTAINER [CONTAINER...]`
 
 ---
 
@@ -80,7 +81,7 @@ docker build -t stalchmst/awesome-app .
 ```
 ---
 
-# What does it do?
+# Working with Docker
 
 ```sh
 # In your computer
@@ -122,15 +123,35 @@ Your containers work together for a greater good.
 * You can't predict the future
 * *Bersatu kita teguh, bercerai kita runtuh*
 
-> Instead of creating single container with so many responsibilities, it is better to spawn a lot of containers that can be scaled/maintained independent to each other
+> Instead of creating single container with so many responsibilities,
+> it is better to spawn a lot of containers that can be scaled/maintained 
+> independently to each other
 
 ---
 
 # What Docker-compose is for
 
-* Prepare development environment as quick as possible (i.e: mysql, redis, rabbit-mq pre-configured)
-* Perform integration environment
-* Deployment: At some point it works and it is enough (i.e: You don't always need kubernetes)
+* Prepare development environment as quick as possible
+  (i.e: mysql, redis, rabbit-mq pre-configured)
+
+* Perform integration testing
+
+* Deliver POC
+
+* Deployment: At some point it works and it is enough
+  (i.e: You don't always need kubernetes)
+
+---
+
+# What Docker Compose is not for
+
+* Advance orchestration
+  (i.e: you will net spreadsheet to write down every exposed port and assign
+  those ports manually)
+
+* Auto scale up/down
+
+* Deploy in multi-cluster
 
 ---
 
@@ -138,14 +159,14 @@ Your containers work together for a greater good.
 
 * In the face of ambiguity, refuse the temptation to guess
 * Official image containers usualy provide good documentation.
-    - Here is Mysql's: https://hub.docker.com/_/mysql/
-    - Here is Nginx's: https://hub.docker.com/_/nginx/
+  * Here is Mysql's: https://hub.docker.com/_/mysql/
+  * Here is Nginx's: https://hub.docker.com/_/nginx/
 * Want to dive into the running container? `docker exec -it <container-name> /bin/bash`
 
 
 ---
 
-# Docker Compose: How is it looks like?
+# Docker Compose: How it looks like
 
 ```yaml
 version: "3"
@@ -175,13 +196,12 @@ services:
 ```
 
 <div style="float:right">
-    つづく<br />
-    To be continued.
+    つづく
 </div>
 
 ---
 
-# Docker Compose: How is it looks like? (Continued)
+# Docker Compose: How it looks like (Continued)
 
 ```yaml
   nginx:
@@ -224,6 +244,18 @@ Stop all services
 ```sh
 docker-compose down
 ```
+
+---
+
+# Our Project (UI)
+
+<img src="/images/docker-compose/tmplt-UI.png" style="width:100%" />
+
+---
+
+# Our Project (Architecture)
+
+<img src="/images/docker-compose/tmplt-architecture.png" style="width:100%" />
 
 ---
 
@@ -301,8 +333,9 @@ echo ">> Done"
 
 * CI/CD: buddy works
 * Deployment machine: Vultr with ssh access
-* Docker compose was already presented in the `Docker Compose: How is it looks like?` section
-<img src="/images/docker-compose/ci-cd.png" />
+* The file was already presented in the previous section
+
+<img src="/images/docker-compose/ci-cd.png" style="width:300px" />
 
 ---
 
@@ -332,5 +365,5 @@ docker-compose up -d
 
 # That's All
 
-We ask you to join [Malang Group Facebook Group](https://www.facebook.com/groups/malangcloud)
+Join [Malang Cloud Facebook Group](https://www.facebook.com/groups/malangcloud)
 
