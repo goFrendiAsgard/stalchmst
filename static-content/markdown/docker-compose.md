@@ -129,7 +129,7 @@ Your containers work together for a greater good.
 
 ---
 
-# What Docker-compose is for
+# What Docker Compose is for
 
 * Prepare development environment as quick as possible
   (i.e: mysql, redis, rabbit-mq pre-configured)
@@ -237,6 +237,10 @@ Start all services
 
 ```sh
 docker-compose up
+
+docker-compose up -d # run everything in the background
+docker-compose up --build -d # build image and run everything 
+                             # in the background
 ```
 
 Stop all services
@@ -331,11 +335,20 @@ echo ">> Done"
 
 # Docker Compose for deployment
 
-* CI/CD: buddy works
-* Deployment machine: Vultr with ssh access
-* The file was already presented in the previous section
+* CI/CD: buddy works [https://app.buddy.works/](https://app.buddy.works/)
+* Deployment machine: Vultr with ssh access [https://www.vultr.com/](https://www.vultr.com/)
+* The Source Code: [https://github.com/goFrendiAsgard/stalchmst](https://github.com/goFrendiAsgard/stalchmst)
+* Typical CI/CD steps:
+  * Run test
+  * Build docker images
+  * Publish images to the registry *(We skip this one)*
+  * Deploy
 
-<img src="/images/docker-compose/ci-cd.png" style="width:300px" />
+---
+
+# Docker Compose for deployment: CI/CD
+
+<img src="/images/docker-compose/ci-cd.png" style="height:500px" />
 
 ---
 
@@ -363,7 +376,18 @@ docker-compose up -d
 
 ---
 
+# Bonus: Can I Use Docker for Development Environment
+
+
+Development inside the container is possible, but not everyone agree with this: 
+
+[https://code.visualstudio.com/docs/remote/containers](https://code.visualstudio.com/docs/remote/containers)
+
+---
+
 # That's All
+
+Q/A?
 
 Join [Malang Cloud Facebook Group](https://www.facebook.com/groups/malangcloud)
 
