@@ -47,14 +47,8 @@ func main() {
 
 	// delay
 	r.GET("/delay/:duration", func(c *gin.Context) {
-		durationStr, err := tm.GetByCode(c.Param("duration"))
-		if err != nil {
-			c.JSON(400, gin.H{
-				"status":        "error",
-				"error_message": "duration should be given",
-			})
-		}
-		duration, err := time.ParseDuration(fmt.Sprintf("%s", durationStr))
+		durationStr := c.Param("duration")
+		duration, err := time.ParseDuration(durationStr)
 		if err != nil {
 			c.JSON(500, gin.H{
 				"status":        "error",
