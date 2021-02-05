@@ -63,9 +63,9 @@ func main() {
 		}
 		time.Sleep(duration)
 		c.JSON(200, gin.H{
-			"status": "ok",
+			"status":        "ok",
 			"error_message": "",
-			"data": fmt.Sprintf("processed in %s", durationStr)
+			"data":          fmt.Sprintf("processed in %s", durationStr),
 		})
 	})
 
