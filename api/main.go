@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -42,6 +43,30 @@ func main() {
 	// default API endpoint
 	r.Any("/", func(c *gin.Context) {
 		createJSONResponse(c, "API is ready", nil)
+	})
+
+	// delay
+	r.POST("/delay/:duration", func(c *gin.Context) {
+		durationStr, err := tm.GetByCode(c.Param("duration"))
+		if err != nil {
+			c.JSON(400, gin.H{
+				"status":        "error",
+				"error_message": "duration should be given",
+			})
+		}
+		duration, err := time.ParseDuration(fmt.Sprintf("%s", durationStr))
+		if err != nil {
+			c.JSON(500, gin.H{
+				"status":        "error",
+				"error_message": fmt.Sprintf("cannot parse %s", durationStr),
+			})
+		}
+		time.Sleep(duration)
+		c.JSON(200, gin.H{
+			"status": "ok",
+			"error_message": "",
+			"data": fmt.Sprintf("processed in %s", durationStr)
+		})
 	})
 
 	// get all templates
