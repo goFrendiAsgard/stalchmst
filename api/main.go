@@ -46,7 +46,7 @@ func main() {
 	})
 
 	// delay
-	r.POST("/delay/:duration", func(c *gin.Context) {
+	r.GET("/delay/:duration", func(c *gin.Context) {
 		durationStr, err := tm.GetByCode(c.Param("duration"))
 		if err != nil {
 			c.JSON(400, gin.H{
